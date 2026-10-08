@@ -409,3 +409,16 @@ hr.rule {
 	border-top: 1px solid #e2e2e2;
 	margin: 1.1em 0;
 }
+
+/* ---- language switcher: en / 简体中文 / 繁體粵語 ---- */
+#layout-menu div.menu-lang {
+	padding-left: 16px;
+	text-indent: -16px;
+	font-size: 92%;
+	color: #666666;
+	line-height: 1.5em;
+}
+
+#layout-menu div.menu-lang a {
+	margin-left: 0;
+}
