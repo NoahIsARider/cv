@@ -1,33 +1,102 @@
 /* Default css file for jemdoc. */
 
+/* ---- palette ------------------------------------------------------------
+   Every colour the page uses has a name here, so the whole sheet can be
+   re-themed in one place. `html[data-theme="dark"]` below swaps the set for
+   a night version; the button that flips it lives in theme.js.
+   Light is the default, which is also what a reader without JavaScript
+   gets. ------------------------------------------------------------------ */
+:root {
+	--bg: #ffffff;
+	--panel: #f6f6f6;
+	--panel2: #f4f4f4;
+	--border: #dddddd;
+	--ink: #111111;
+	--text: #222222;
+	--muted: #666666;
+	--head: #527bbd;
+	--head-current: #022b6d;
+	--link: #224b8d;
+	--menulink: #527bbd;
+	--rule: #aaaaaa;
+	--hair: #e2e2e2;
+	--foot: #c0c0c0;
+	--footlink: #80a0b0;
+	--code: #ffffdd;
+	--infobg: #ffffee;
+	--blocktitle: #cd7b62;
+	--tableborder: #000000;
+	--cellborder: #808080;
+	--hl: rgba(120, 190, 255, 0.35);
+	--nav-w: 210px;
+	color-scheme: light;
+}
+
+/* the night set is jemdoc's own palette pushed down, not the homepage's
+   solarized one: same blue headings, same grey panel, a neutral dark ground */
+html[data-theme="dark"] {
+	--bg: #1a1c20;
+	--panel: #22252a;
+	--panel2: #262a30;
+	--border: #33383f;
+	--ink: #e8eaec;
+	--text: #cfd3d8;
+	--muted: #9aa1aa;
+	--head: #7ea6d8;
+	--head-current: #a9c8ea;
+	--link: #7ea6d8;
+	--menulink: #9cbde6;
+	--rule: #3a4048;
+	--hair: #2b3037;
+	--foot: #8b939c;
+	--footlink: #9db4c6;
+	--code: #2b3037;
+	--infobg: #23272d;
+	--blocktitle: #cf8a72;
+	--tableborder: #6b737c;
+	--cellborder: #3a4048;
+	--hl: rgba(120, 190, 255, 0.18);
+	color-scheme: dark;
+}
+
+/* ---- layout -------------------------------------------------------------
+   The sidebar is a fixed width so that switching language does not move it:
+   the menu is nowrap, and 简体 / 繁體 labels are much shorter than the
+   English ones, which used to let the whole column breathe in and out. --- */
 table#tlayout {
     border: none;
     border-collapse: separate;
-    background: white;
+    background: var(--bg);
+    table-layout: fixed;
+    width: 100%;
 }
 
 body {
-	background: white;
+	background: var(--bg);
+	color: var(--ink);
 	font-family: Georgia, serif;
 	padding-bottom: 8px;
 	margin: 0;
 }
 
 #layout-menu {
-	background: #f6f6f6;
-	border: 1px solid #dddddd;
+	background: var(--panel);
+	border: 1px solid var(--border);
 	padding-top: 0.5em;
 	padding-left: 8px;
 	padding-right: 8px;
 	font-size: 1.0em;
-	width: auto;
-	white-space: nowrap;
+	width: var(--nav-w);
+	min-width: var(--nav-w);
+	max-width: var(--nav-w);
+	box-sizing: border-box;
+	white-space: normal;
     text-align: left;
     vertical-align: top;
 }
 
 #layout-menu td {
-	background: #f4f4f4;
+	background: var(--panel2);
     vertical-align: top;
 }
 
@@ -36,7 +105,7 @@ body {
 	padding-left: 1.0em;
 	padding-right: 1.0em;
     border: none;
-    background: white;
+    background: var(--bg);
     text-align: left;
     vertical-align: top;
 }
@@ -47,7 +116,7 @@ body {
 }
 
 tt {
-    background: #ffffdd;
+    background: var(--code);
 }
 
 pre, tt {
@@ -56,28 +125,30 @@ pre, tt {
 }
 
 a, a > tt {
-	color: #224b8d;
+	color: var(--link);
 	text-decoration: none;
+	border-bottom: 1px solid transparent;
 }
 
 a:hover {
-	border-bottom: 1px gray dotted;
+	border-bottom: 1px dotted var(--border);
 }
 
 #layout-menu a.current:link, #layout-menu a.current:visited {
-	color: #022b6d;
-	border-bottom: 1px gray solid;
+	color: var(--head-current);
+	border-bottom: 1px solid var(--border);
 }
 #layout-menu a:link, #layout-menu a:visited, #layout-menu a:hover {
-	color: #527bbd;
+	color: var(--menulink);
 	text-decoration: none;
 }
 #layout-menu a:hover {
 	text-decoration: none;
+	border-bottom-color: var(--border);
 }
 
 div.menu-category {
-	border-bottom: 1px solid gray;
+	border-bottom: 1px solid var(--border);
 	margin-top: 0.8em;
 	padding-top: 0.2em;
 	padding-bottom: 0.1em;
@@ -92,7 +163,7 @@ div.menu-item {
 div#toptitle {
 	padding-bottom: 0.2em;
 	margin-bottom: 1.5em;
-	border-bottom: 3px double gray;
+	border-bottom: 3px double var(--border);
 }
 
 /* Reduce space if we begin the page with a title. */
@@ -117,13 +188,13 @@ strong {
 
 
 h1, h2, h3 {
-	color: #527bbd;
+	color: var(--head);
 	margin-top: 0.7em;
 	margin-bottom: 0.3em;
 	padding-bottom: 0.2em;
 	line-height: 1.0;
 	padding-top: 0.5em;
-	border-bottom: 1px solid #aaaaaa;
+	border-bottom: 1px solid var(--rule);
 }
 
 h1 {
@@ -158,14 +229,14 @@ pre {
 
 div#footer {
 	font-size: small;
-	border-top: 1px solid #c0c0c0;
+	border-top: 1px solid var(--foot);
 	padding-top: 0.1em;
 	margin-top: 4.0em;
-	color: #c0c0c0;
+	color: var(--foot);
 }
 
 div#footer a {
-	color: #80a0b0;
+	color: var(--footlink);
 }
 
 div#footer-text {
@@ -189,7 +260,7 @@ dl {
 }
 
 dd {
-	color: #222222;
+	color: var(--text);
 }
 
 dd > *:first-child {
@@ -239,18 +310,18 @@ div.codeblock, div.infoblock {
 
 div.blocktitle {
 	font-weight: bold;
-	color: #cd7b62;
+	color: var(--blocktitle);
 	margin-top: 1.2em;
 	margin-bottom: 0.1em;
 }
 
 div.blockcontent {
-	border: 1px solid silver;
+	border: 1px solid var(--border);
 	padding: 0.3em 0.5em;
 }
 
 div.infoblock > div.blockcontent {
-	background: #ffffee;
+	background: var(--infobg);
 }
 
 div.blockcontent p + ul, div.blockcontent p + ol {
@@ -270,7 +341,7 @@ div.infoblock p + p {
 }
 
 div.codeblock > div.blockcontent {
-	background: #f6f6f6;
+	background: var(--panel);
 }
 
 span.pycommand {
@@ -296,8 +367,54 @@ span.comment, span.comment > *, span.string, span.string > * {
 	color: #606060;
 }
 
+/* the same code colours, brightened for a dark background */
+html[data-theme="dark"] span.pycommand {
+	color: #82aaff;
+}
+html[data-theme="dark"] span.statement {
+	color: #98c379;
+}
+html[data-theme="dark"] span.builtin {
+	color: #61afef;
+}
+html[data-theme="dark"] span.special {
+	color: #e06c75;
+}
+html[data-theme="dark"] span.operator {
+	color: #d19a66;
+}
+html[data-theme="dark"] span.error {
+	color: #e06c75;
+}
+html[data-theme="dark"] span.comment, html[data-theme="dark"] span.comment > *,
+html[data-theme="dark"] span.string, html[data-theme="dark"] span.string > * {
+	color: #98a2ac;
+}
+
+/* a printed CV is black on white, whatever the screen is set to */
 @media print {
 	#layout-menu { display: none; }
+	:root, html[data-theme="dark"] {
+		--bg: #ffffff;
+		--panel: #ffffff;
+		--panel2: #ffffff;
+		--border: #dddddd;
+		--ink: #111111;
+		--text: #222222;
+		--muted: #444444;
+		--head: #33496e;
+		--head-current: #022b6d;
+		--link: #224b8d;
+		--menulink: #224b8d;
+		--rule: #aaaaaa;
+		--hair: #cccccc;
+		--foot: #666666;
+		--footlink: #445566;
+		--code: #f4f4f4;
+		--infobg: #ffffff;
+		--hl: rgba(120, 190, 255, 0.35);
+		color-scheme: light;
+	}
 }
 
 #fwtitle {
@@ -336,7 +453,7 @@ img.eqwl {
 }
 
 table {
-    border: 2px solid black;
+    border: 2px solid var(--tableborder);
     border-collapse: collapse;
 }
 
@@ -345,7 +462,7 @@ td {
     padding-left: 0.5em;
     padding-right: 0.5em;
     text-align: center;
-    border: 1px solid gray;
+    border: 1px solid var(--cellborder);
 }
 
 table + table {
@@ -354,7 +471,7 @@ table + table {
 
 tr.heading {
     font-weight: bold;
-    border-bottom: 2px solid black;
+    border-bottom: 2px solid var(--tableborder);
 }
 
 img {
@@ -395,7 +512,7 @@ div.role-title {
 }
 
 div.role-meta {
-	color: #444444;
+	color: var(--muted);
 	font-size: 95%;
 	margin-bottom: 0.35em;
 }
@@ -406,13 +523,13 @@ ul.tight {
 
 hr.rule {
 	border: none;
-	border-top: 1px solid #e2e2e2;
+	border-top: 1px solid var(--hair);
 	margin: 1.1em 0;
 }
 
 /* ---- pulled from the main site so a CV page can highlight a scan-first number ---- */
 .highlight-blue {
-	background-color: rgba(120, 190, 255, 0.35);
+	background-color: var(--hl);
 	border-radius: 0.35rem;
 	padding: 0.05rem 0.35rem;
 	box-decoration-break: clone;
@@ -424,10 +541,81 @@ hr.rule {
 	padding-left: 16px;
 	text-indent: -16px;
 	font-size: 92%;
-	color: #666666;
+	color: var(--muted);
 	line-height: 1.5em;
 }
 
 #layout-menu div.menu-lang a {
 	margin-left: 0;
+}
+
+/* ---- paper / night button, injected by theme.js ---- */
+#layout-menu button.menu-theme {
+	display: block;
+	margin: 0.35em 0 0.1em;
+	padding: 0;
+	border: 0;
+	background: none;
+	font: inherit;
+	font-size: 92%;
+	line-height: 1.5em;
+	color: var(--muted);
+	cursor: pointer;
+	text-align: left;
+}
+
+#layout-menu button.menu-theme:hover {
+	color: var(--head);
+}
+
+#layout-menu button.menu-theme:focus-visible {
+	outline: 2px dotted var(--muted);
+	outline-offset: 2px;
+}
+
+#layout-menu button.menu-theme .ic {
+	width: 13px;
+	height: 13px;
+	margin-right: 6px;
+	vertical-align: -2px;
+	fill: none;
+	stroke: currentColor;
+	stroke-width: 1.7;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+}
+
+#layout-menu button.menu-theme .sun {
+	display: none;
+}
+
+html[data-theme="dark"] #layout-menu button.menu-theme .moon {
+	display: none;
+}
+
+html[data-theme="dark"] #layout-menu button.menu-theme .sun {
+	display: inline;
+}
+
+/* ---- narrow screens: the sidebar stops being a column ---- */
+@media (max-width: 760px) {
+	table#tlayout, table#tlayout tbody, table#tlayout tr,
+	#layout-menu, #layout-content {
+		display: block;
+		width: auto;
+		min-width: 0;
+		max-width: none;
+	}
+	#layout-menu {
+		border: none;
+		border-bottom: 1px solid var(--border);
+		padding-bottom: 0.4em;
+		margin-bottom: 1.2em;
+	}
+	#layout-menu div.menu-category {
+		margin-top: 0.5em;
+	}
+	#layout-menu button.menu-theme {
+		margin-top: 0.5em;
+	}
 }
