@@ -53,6 +53,15 @@
 
 	function isDark() { return root.getAttribute("data-theme") === "dark"; }
 
+	/* the footer names the host that is actually serving this copy, so a mirror
+	   never claims another host's name */
+	function nameHost() {
+		var a = document.getElementById("footer-host");
+		if (!a) { return; }
+		a.textContent = location.hostname || "this copy";
+		if (!a.getAttribute("href")) { a.setAttribute("href", "/"); }
+	}
+
 	function paint() {
 		var btn = document.getElementById("theme");
 		var word = isDark() ? words[1] : words[0];
@@ -97,8 +106,9 @@
 	}
 
 	if (document.readyState === "loading") {
-		document.addEventListener("DOMContentLoaded", build);
+		document.addEventListener("DOMContentLoaded", function () { nameHost(); build(); });
 	} else {
+		nameHost();
 		build();
 	}
 })();
